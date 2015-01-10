@@ -10,5 +10,7 @@
     <string name="action_search">Suche</string>
     <string name="action_refresh">Aktualisieren</string>
     <string name="action_exit">Beenden</string>
+    <string name="title_activity_export">ExportActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

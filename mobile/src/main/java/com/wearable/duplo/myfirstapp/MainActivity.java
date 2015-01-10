@@ -1,5 +1,7 @@
 package com.wearable.duplo.myfirstapp;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,16 +9,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements OnClickListener {
 
     public final static String EXTRA_MESSAGE = "com.wearable.duplo.myfirstapp.MESSAGE"; // Key für Intent in public Variable = good practice
+    ImageButton imgButton;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ImageButton btn1 = (ImageButton)findViewById(R.id.imageButton1);
+        btn1.setOnClickListener(this);
+
+        ImageButton btn2 = (ImageButton)findViewById(R.id.imageButton2);
+        btn2.setOnClickListener(this);
+
+        ImageButton btn3 = (ImageButton)findViewById(R.id.imageButton3);
+        btn3.setOnClickListener(this);
+
+        ImageButton btn4 = (ImageButton)findViewById(R.id.imageButton4);
+        btn4.setOnClickListener(this);
+
     }
 
 
@@ -36,13 +57,22 @@ public class MainActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.action_search:
                 //openSearch();
+                Toast.makeText(this,"Suche wurde ausgewählt", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.action_settings:
-                //openSettings();
-                return true;
+
             case R.id.action_refresh:
                 //openRefresh();
+                Toast.makeText(this,"Aktualisieren wurde ausgewählt", Toast.LENGTH_SHORT).show();
                 return true;
+
+            case R.id.action_settings:
+                //openSettings();
+                Toast.makeText(this,"Einstellungen", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.action_exit:
+                System.exit(0);
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -52,8 +82,53 @@ public class MainActivity extends ActionBarActivity {
     public void sendMessage(View view){
         Intent intent = new Intent(this, DisplayMessageActivity.class); //(Context, da-soll-System-den-Intent-Hinschicken
         EditText editText = (EditText) findViewById(R.id.edit_message); // Inhalt des Wertes bekommen
-        String message = editText.getText().toString(); //lokale Variable 'Message" zum Speichern des String
-        intent.putExtra(EXTRA_MESSAGE, message); //putExtra zum Anhängen des Textwerts an Intent
-        startActivity(intent);
+
+        if (editText.getText().toString().trim().length()==0){
+            // überprüft, ob Eingabe leer ist; falls ja nicht weiter & Toast geworfen
+            Context context = getApplicationContext();
+            CharSequence text = " Feld darf nicht leer sein";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context,text, duration);
+            toast.show();
+        }
+
+        else {
+            String message = editText.getText().toString(); //lokale Variable 'Message" zum Speichern des String
+            intent.putExtra(EXTRA_MESSAGE, message); //putExtra zum Anhängen des Textwerts an Intent
+            startActivity(intent);
+        }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        Toast pieceToast=null;
+
+        switch(v.getId()){
+            case R.id.imageButton1:
+                pieceToast= Toast.makeText(getApplicationContext(), "Image Button One Clicked", Toast.LENGTH_SHORT);
+                pieceToast.show();
+                break;
+
+            case R.id.imageButton2:
+                pieceToast= Toast.makeText(getApplicationContext(), "Image Button Two Clicked", Toast.LENGTH_SHORT);
+                pieceToast.show();
+                break;
+
+            // öffnet Export-View
+            case R.id.imageButton3:
+                Intent intent = new Intent(this, ExportActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.imageButton4:
+                pieceToast= Toast.makeText(getApplicationContext(), "Image Button Four Clicked", Toast.LENGTH_SHORT);
+                pieceToast.show();
+                break;
+
+            default:
+                break;
+        }
     }
 }
