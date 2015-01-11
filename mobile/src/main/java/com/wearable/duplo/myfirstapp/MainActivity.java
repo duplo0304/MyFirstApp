@@ -3,6 +3,8 @@ package com.wearable.duplo.myfirstapp;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -18,7 +21,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
     public final static String EXTRA_MESSAGE = "com.wearable.duplo.myfirstapp.MESSAGE"; // Key für Intent in public Variable = good practice
     ImageButton imgButton;
-
+    private static final int SETTINGS_RESULT = 1;
 
 
     @Override
@@ -67,7 +70,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
             case R.id.action_settings:
                 //openSettings();
-                Toast.makeText(this,"Einstellungen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Einstellungen wurde ausgewählt", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.action_exit:
@@ -118,17 +121,19 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
             // öffnet Export-View
             case R.id.imageButton3:
-                Intent intent = new Intent(this, ExportActivity.class);
-                startActivity(intent);
+                Intent intent3 = new Intent(this, ExportActivity.class);
+                startActivity(intent3);
                 break;
 
             case R.id.imageButton4:
-                pieceToast= Toast.makeText(getApplicationContext(), "Image Button Four Clicked", Toast.LENGTH_SHORT);
-                pieceToast.show();
+                Intent intent4 = new Intent(this, LoginActivity.class);
+                startActivity(intent4);
                 break;
 
             default:
                 break;
         }
     }
+
+
 }
